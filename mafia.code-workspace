@@ -1,9 +1,7 @@
 {
-	"folders": [
-		{
-			"name": "mafia",
-			"path": "."
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }
