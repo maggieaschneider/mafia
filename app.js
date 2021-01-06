@@ -2,7 +2,7 @@ const http = require('http');
 const port = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html');
   res.end('<h1>rhianna sucks</h1>');
