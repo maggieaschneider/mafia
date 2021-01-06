@@ -6,7 +6,15 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.end('<h1>rhianna sucks</h1>');
 });
-
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+ });
 server.listen(port,() => {
   console.log(`Server running at port `+port);
 });
