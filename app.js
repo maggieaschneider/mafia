@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.end('<h1>rhianna sucks</h1>');
   res.setText('Content-Type', 'text/html');
-  res.end('<h1>yes</h1>');
+  res.end('<h2>yes</h2>');
 });
 
 server.listen(port,() => {
