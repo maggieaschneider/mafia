@@ -5,9 +5,7 @@ const server = http.createServer((req, res) => {
     
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>rhianna sucks</h1>');
-  res.setText('Content-Type', 'text/html');
-  res.end('<h2>yes</h2>');
+  res.end('<h1>we love you rhianna</h1>');
 });
 
 server.listen(port,() => {
