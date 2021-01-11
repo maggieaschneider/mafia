@@ -1,29 +1,24 @@
 {
-    "name": "coolnodeapp",
-    "version": "1.0.0",
-    "description": "node app ",
-    "main": "app.js", 
-    "scripts": {
-        "test": "make test",
-        "start": "node app.js"
-      },
-    "repository": {
+  "name": "coolnodeapp",
+  "version": "1.0.0",
+  "description": "node app ",
+  "main": "app.js",
+  "scripts": {
+    "test": "make test",
+    "start": "node app.js"
+  },
+  "repository": {
     "type": "git",
     "url": ""
   },
-    "author": "mag",
-    "license": "ISC",
-    "bugs": {
-    "url":  "https://git.heroku.com/mafiaproj.git"
+  "author": "mag",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://git.heroku.com/mafiaproj.git"
   },
-    "homepage": "",
-  
-  "dependencies": {
-    "express": "^4.9.8"
-  },
-  "engines": {
-    "node": "10.x"
+  "homepage": "",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.0.5"
   }
 }
-  
- 
