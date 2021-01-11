@@ -1,6 +1,7 @@
 const http = require('http');
 const port = process.env.PORT || 3000
-// var io = require('socket.io')(http);
+var io = require('socket.io')(http);
+
 
 
 const server = http.createServer((req, res) => {
@@ -11,6 +12,15 @@ const server = http.createServer((req, res) => {
   res.end('<p style = "color: blue"> hello </p>');
   
 });
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+ }); 
 
 
 server.listen(port,() => {
