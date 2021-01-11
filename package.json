@@ -17,7 +17,7 @@
     "url": "https://git.heroku.com/mafiaproj.git"
   },
   "homepage": "",
-  "devDependencies": {
+  "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^3.0.5"
   }
