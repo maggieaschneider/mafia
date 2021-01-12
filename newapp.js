@@ -1,7 +1,8 @@
-const http = require('http');
+//const http = require('http');
 const port = process.env.PORT || 80
 const app = require('express')();
-const server = http.createServer(app);
+const http = require('http').Server(app);
+//const server = http.createServer(app);
 const io = require('socket.io')(http);
 
 
@@ -26,6 +27,6 @@ io.on('connection', (socket) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
  });
-server.listen(port,() => {
-  console.log(`Server running at port `+port);
+http.listen(port,() => {
+  console.log('Server running at port' +port);
 }); 
