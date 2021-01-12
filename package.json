@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://git.heroku.com/mafiaproj.git"
   },
   "author": "mag",
   "license": "ISC",
   "bugs": {
-    "url": "https://git.heroku.com/mafiaproj.git"
+    "url": " https://mafiaproj.herokuapp.com/"
   },
   "homepage": "",
   "dependencies": {
