@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
   });
  }); 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/newindex.html');
  });
 http.listen(port,() => {
   console.log('Server running at port' +port);
