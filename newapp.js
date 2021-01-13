@@ -5,7 +5,6 @@ const http = require('http').Server(app);
 //const server = http.createServer(app);
 const io = require('socket.io')(http);
 
-
 // const server = http.createServer((req, res) => {
     
 //   res.statusCode = 200;
@@ -14,7 +13,6 @@ const io = require('socket.io')(http);
 //   res.end('hello');
   
 // });
- 
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
