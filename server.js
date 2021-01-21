@@ -70,6 +70,6 @@ io.on('connection', socket => {
   });
 });
 
-const PORT = process.env.PORT || 2000;
+const PORT = process.env.PORT || 690;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
