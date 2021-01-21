@@ -1,25 +1,55 @@
-//const http = require('http');
-const port = process.env.PORT || 80
-const app = require('express')();
-const http = require('http').Server(app);
-//const server = http.createServer(app);
-const io = require('socket.io')(http);
-
+const chatForm = document.getElementById('chat-form');
+const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
+// Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
 const socket = io();
 
+// Join chatroom
 socket.emit('joinRoom', { username, room });
+
+// Get room and users
 socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);
   outputUsers(users);
 });
 
+// Message from server
+socket.on('message', message => {
+  console.log(message);
+  outputMessage(message);
+
+  // Scroll down
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+// Message submit
+chatForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  // Get message text
+  let msg = e.target.elements.msg.value;
+  
+  msg = msg.trim();
+  
+  if (!msg){
+    return false;
+  }
+
+  // Emit message to server
+  socket.emit('chatMessage', msg);
+
+  // Clear input
+  e.target.elements.msg.value = '';
+  e.target.elements.msg.focus();
+});
+
+// Output message to DOM
 function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
@@ -35,10 +65,12 @@ function outputMessage(message) {
   document.querySelector('.chat-messages').appendChild(div);
 }
 
+// Add room name to DOM
 function outputRoomName(room) {
   roomName.innerText = room;
 }
 
+// Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach(user=>{
@@ -47,28 +79,3 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
-
-
-// const server = http.createServer((req, res) => {
-    
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/html');
-//   res.write('<h1>we love you rhianna</h1>');
-//   res.end('hello');
-  
-// });
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
- }); 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/newindex.html');
- });
-http.listen(port,() => {
-  console.log('Server running at port' +port);
-}); 
