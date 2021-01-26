@@ -57,6 +57,7 @@ function outputMessage(message) {
   p.classList.add('meta');
   p.innerText = message.username;
   div.appendChild(p);
+  window.scrollBy(0, 100);
   const para = document.createElement('p');
   para.classList.add('text');
   para.innerText = message.text;
