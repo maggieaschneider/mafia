@@ -54,5 +54,6 @@ module.exports = {
   getCurrentUser,
   userLeave,
   getRoomUsers,
-  assignRoles
+  assignRoles,
+  rooms
 };
