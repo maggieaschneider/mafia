@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "node app ",
   "main": "server.js",
-  
   "scripts": {
     "start": "node server",
     "dev": "nodemon server"
-    
   },
   "repository": {
     "type": "git",
@@ -25,6 +23,7 @@
     "game": "^1.0.3",
     "moment": "^2.29.1",
     "nodemon": "^2.0.7",
+    "package.json": "^2.0.1",
     "socket.io": "^3.1.0"
   }
 }

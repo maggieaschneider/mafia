@@ -32,15 +32,14 @@ io.on('connection', socket => {
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
     //users.assignRoles()
-    if(rooms[room].length == 2)
-    {
-      assignRoles(room);
-    }
+    
 
     socket.join(user.room);
+    
 
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to Mafia!'));
+    
 
     // Broadcast when a user connects
     socket.broadcast
@@ -50,6 +49,10 @@ io.on('connection', socket => {
         formatMessage(botName, `${user.username} has joined the chat`)
       );
       
+      if(rooms[room].length == 10)
+    {
+      assignRoles(room);
+    }
       
 
     // Send users and room info
@@ -87,7 +90,9 @@ io.on('connection', socket => {
       // Send users and room info
       
     }
+    
   });
+  
 
   function userJoin(id, username, room) {
     const user = { id, username, room };
@@ -124,9 +129,10 @@ io.on('connection', socket => {
   
   
   
+
   function assignRoles (room) {
     
-      u = rooms[room];
+      u = shuffle(rooms[room]);
       
         for (var i = 0; i < u.length; i++) {
             
@@ -136,6 +142,25 @@ io.on('connection', socket => {
             io.to(u[i].id).emit('message', formatMessage(u[i].username, 'You have been assigned the role of ' + roles[i]));
           }
     
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
   }
   
 });
