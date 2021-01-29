@@ -3,12 +3,6 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const users = [];
-const rooms = {};
-var roles = ["townsperson", "townsperson", "townsperson", 
-"townsperson", "townsperson", "sheriff", "doctor", 
-"sniper", "mafia", "mafia"];
-
 /*const {
   userJoin,
   getCurrentUser,
@@ -72,11 +66,6 @@ io.on('connection', socket => {
   // Runs when client disconnects
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
-    console.log(user);
-    users.splice(users.indexOf(user), 1);
-    /*console.log(rooms[user.room]);
-    rooms[user.room].splice(rooms[user.room].indexOf(user), 1);
-    console.log(rooms[user.room]);*/
 
     if (user) {
       io.to(user.room).emit(
@@ -88,58 +77,9 @@ io.on('connection', socket => {
       
     }
   });
-
-  function userJoin(id, username, room) {
-    const user = { id, username, room };
-  
-    users.push(user);
-    if(!(room in rooms))
-    {
-      rooms[room] = [];
-    }
-  
-    rooms[room].push(user);
-  
-    return user;
-  }
-  
-  // Get current user
-  function getCurrentUser(id) {
-    return users.find(user => user.id === id);
-  }
-  
-  // User leaves chat
-  function userLeave(id) {
-    const index = users.findIndex(user => user.id === id);
-  
-    if (index !== -1) {
-      return users.splice(index, 1)[0];
-    }
-  }
-  
-  // Get room users
-  function getRoomUsers(room) {
-    return users.filter(user => user.room === room);
-  }
-  
-  
-  
-  function assignRoles (room) {
-    
-      u = rooms[room];
-      
-        for (var i = 0; i < u.length; i++) {
-            
-            
-            u[i].game_role = roles[i];
-            console.log(u[i]);
-            io.to(u[i].id).emit('message', formatMessage(u[i].username, 'You have been assigned the role of ' + roles[i]));
-          }
-    
-  }
   
 });
 
-const PORT = process.env.PORT || 900;
+const PORT = process.env.PORT || 590;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
