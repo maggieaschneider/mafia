@@ -3,6 +3,7 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
+
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
@@ -79,3 +80,19 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
+
+ const select = document.createElement("select");
+      select.id = "users";
+      select.name = "users";
+      select.class = "fas fa-users";
+
+
+      for (const val of rooms[room].username) {
+        var option = document.createElement("option");
+        option.value = val;
+        select.appendChild(option);
+        document.addChild(select);
+      }
+
+      var button = document.getElementById("selections");
+      button.onClick=function(){alert(select.options[select.selectedIndex].value);}
