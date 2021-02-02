@@ -1,7 +1,9 @@
+var document;
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+const select = document.createElement('select');
 
 
 // Get username and room from URL
@@ -24,6 +26,7 @@ socket.on('roomUsers', ({ room, users }) => {
 socket.on('message', message => {
   console.log(message);
   outputMessage(message);
+
 
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -71,6 +74,48 @@ function outputRoomName(room) {
   roomName.innerText = room;
 }
 
+function killUser(users) {
+  select.id = "users";
+  select.name = "users";
+  select.class = "fas fa-users";
+
+
+  for (const val of rooms[room].username) {
+    var option = document.createElement("option");
+    option.value = val;
+    select.appendChild(option);
+    document.addChild(select);
+  }
+
+  var button = document.getElementById("users");
+  button.onClick=function(){
+    console.log(select.options[select.selectedIndex].value);
+    socket.emit('killUser', select.options[select.selectedIndex].value);
+  }
+}
+
+function voteMafia(users) {
+  select.id = "users";
+  select.name = "users";
+  select.class = "fas fa-users";
+
+
+  for (const val of rooms[room].username) {
+    var option = document.createElement("option");
+    option.value = val;
+    select.appendChild(option);
+    document.addChild(select);
+  }
+
+  var button = document.getElementById("users");
+  button.onClick=function(){
+    console.log(select.options[select.selectedIndex].value);
+    socket.emit('killUser', select.options[select.selectedIndex].value);
+  }
+}
+
+
+
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
@@ -81,18 +126,3 @@ function outputUsers(users) {
   });
  }
 
- const select = document.createElement("select");
-      select.id = "users";
-      select.name = "users";
-      select.class = "fas fa-users";
-
-
-      for (const val of rooms[room].username) {
-        var option = document.createElement("option");
-        option.value = val;
-        select.appendChild(option);
-        document.addChild(select);
-      }
-
-      var button = document.getElementById("selections");
-      button.onClick=function(){alert(select.options[select.selectedIndex].value);}
