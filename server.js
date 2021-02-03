@@ -97,9 +97,25 @@ io.on('connection', socket => {
     const user = getCurrentUser(socket.id);
     const mesg = msg;
   
-
     io.to(user.room).emit('message', formatMessage(user.username, msg));
 });
+  socket.on('killUser', id => {
+      const user = getCurrentUser(socket.id);
+      const chosen = id;
+      console.log(user, chosen);
+      io.emit('message', formatMessage(botName, "The mafia has chosen to kill " + chosen));
+      kickUser(user.room, chosen);
+      rooms[user.room].forEach(e=>{
+        console.log(e);
+        if (e.username == chosen){
+          console.log("leaving");
+          socket.leave(e.id);
+            io.to(e.id).emit('message', formatMessage(botName, "The mafia has killed you"));
+        }
+      })
+      
+      //vote(room);
+   });
 
 
   // Runs when client disconnects
@@ -170,13 +186,13 @@ io.on('connection', socket => {
     for (var i = 0; i < rooms[room].length; i++) {
       if (roles[i] == ('mafia')){
         io.to(u[i].id).emit('message', formatMessage(botName, "Enter the name of the person you would like to kill."));
-        socket.on('killUser', id => {
-          const user = getCurrentUser(socket.id);
-          const chosen = msg;
-          io.emit('message', formatMessage(botName, "The mafia has chosen to kill" + chosen));
-          kickUser(room, chosen);
-          vote(room);
-        });
+        // socket.on('killUser', id => {
+        //   const user = getCurrentUser(socket.id);
+        //   const chosen = msg;
+        //   io.emit('message', formatMessage(botName, "The mafia has chosen to kill" + chosen));
+        //   kickUser(room, chosen);
+        //   vote(room);
+        // });
       }
     }
     
@@ -233,8 +249,8 @@ io.on('connection', socket => {
 
     function kickUser(socket){           
 
-      socket.leave(clientInfo[socket.id].room);
-      delete clientInfo[socket.id];
+      // socket.leave(clientInfo[socket.id].room);
+      // delete clientInfo[socket.id];
     }
 
   

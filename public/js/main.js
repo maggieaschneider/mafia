@@ -126,13 +126,23 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
-
+ var button = document.getElementById("userKill");
+ var choice = document.getElementById("victim");
+ console.log('button', button);
+ button.onclick=function(){
+   console.log(choice.value);
+   socket.emit('killUser', choice.value);
+ }
  
- var el = document.getElementById("userKill");
- if (el.addEventListener)
-     el.addEventListener("click", assignRoles, false);
- else if (el.attachEvent)
-     el.attachEvent('onclick', assignRoles);
+//     // button.addEventListener("click", function(){
+//       console.log(select.options[select.selectedIndex].value);
+//       socket.emit('killUser', select.options[select.selectedIndex].value);
+//     }, false);
+// //  var el = document.getElementById("userKill");
+//  if (el.addEventListener)
+//      el.addEventListener("click", assignRoles, false);
+//  else if (el.attachEvent)
+//      el.attachEvent('onclick', assignRoles);
 
 // document.getElementById("victimChoose").onclick = assinRoles;
 // document.getElementById("victimChoose").onclick = function () { alert('i hate comp sci!'); };
