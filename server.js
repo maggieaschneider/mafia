@@ -99,23 +99,46 @@ io.on('connection', socket => {
   
     io.to(user.room).emit('message', formatMessage(user.username, msg));
 });
-  socket.on('killUser', id => {
+  socket.on('killMafia', id => {
       const user = getCurrentUser(socket.id);
       const chosen = id;
       console.log(user, chosen);
-      io.emit('message', formatMessage(botName, "The mafia has chosen to kill " + chosen));
+      io.emit('message', formatMessage(botName, "The town has chosen to execute " + chosen));
       kickUser(user.room, chosen);
       rooms[user.room].forEach(e=>{
         console.log(e);
         if (e.username == chosen){
           console.log("leaving");
           socket.leave(e.id);
-            io.to(e.id).emit('message', formatMessage(botName, "The mafia has killed you"));
+          io.to(e.id).emit('message', formatMessage(botName, "The people have killed you. Please leave the game."));
+          if (e.game_role == ('mafia')){
+            io.emit('message', formatMessage(botName, "The townspeople have won the game!  "));
+          }
+          else{
+            io.emit('message', formatMessage(botName, "The person the townspeople voted is not the mafia. The mafia will continue killing."));
+          }
         }
       })
+  });
       
-      //vote(room);
-   });
+   socket.on('killUser', id => {
+    const user = getCurrentUser(socket.id);
+    const choose = id;
+    console.log(user, choose);
+    io.emit('message', formatMessage(botName, "You have chosen to vote " + choose));
+    kickUser(user.room, choose);
+    rooms[user.room].forEach(e=>{
+      console.log(e);
+      if (e.username == choose){
+        console.log("leaving");
+        socket.leave(e.id);
+        io.to(e.id).emit('message', formatMessage(botName, "The mafia has killed you. Please leave the game."));
+       
+      }
+    })
+    
+    //vote(room);
+ });
 
 
   // Runs when client disconnects
@@ -231,18 +254,19 @@ io.on('connection', socket => {
       // get info of chosen name by votes
     
 
-    function voteOut(room, chosen)
+    function voteOut(chosen)
     { 
       console.log(chosen);
       if (chosen.id === (mafia.id))
       {
+        
+        io.to(chosen.id).emit('message', formatMessage(botName, "The town has killed you. Please leave the game."));
         io.emit('message', formatMessage(botName, "The town has chosen to execute" + chosen));
         io.emit('message', formatMessage(botName, "The mafia has been voted out. Nice job!"));
-        kickUser(chosen);
       }
       else {
       io.emit('message', formatMessage(botName, "The town has chosen to execute" + chosen));
-      kickUser(chosen);
+      io.to(chosen.id).emit('message', formatMessage(botName, "The town has killed you. Please leave the game."));
       murder(room);
       }
     }
@@ -273,6 +297,7 @@ io.on('connection', socket => {
     
       return array;
     }
+  
  });
 
   const PORT = process.env.PORT || 900;

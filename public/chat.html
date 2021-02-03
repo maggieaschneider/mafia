@@ -8,12 +8,11 @@
       .chat-main {
         word-wrap: break-word;
         width: 700px;
-        border: 5px dashed;
       }
       .box {
         width: 833px;
         height: 750px;
-        border: 5px dashed;
+        border: 4px dashed;
         text-align: center;
         position: fixed;
         top: 1px;
@@ -30,7 +29,7 @@
   </head>
   <body>
     <div class="box">
-      <img src="mafiacampfire.jpg" style = "height: 204px; width: 148px; margin-top: 30%;">
+      <img src="mafiacampfirewstick.jpg" style = "height: 700px; width: 700px; margin-right: 5%">
     </div>
     <div class="chat-container">
       <header class="chat-header">
@@ -80,7 +79,22 @@
         />
         <!-- <button class="send">KILL</button> -->
        <input id="userKill" type="button" value="userKill" />
+       
+       <div class="mafia-choice-container">
+        <form id="mafia-choice">
+        <label for="mafia">Vote for the mafia</label>
+        <input
+          type="text"
+          name="mafia"
+          id="mafia"
+          placeholder="Enter username..."
+        />
+        <!-- <button class="send">KILL</button> -->
+       <input id="mafiaKill" type="button" value="mafiaKill" />
       </div>
+      </div>
+
+      
 
       <!-- <input id="userKill" type="button" value="userKill" onclick="assignRoles();" /> -->
       

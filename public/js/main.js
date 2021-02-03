@@ -113,7 +113,7 @@ function voteMafia(users) {
   var button = document.getElementById("users");
   button.onClick=function(){
     console.log(select.options[select.selectedIndex].value);
-    socket.emit('killUser', select.options[select.selectedIndex].value);
+    socket.emit('killMafia', select.options[select.selectedIndex].value);
   }
 }
 
@@ -132,6 +132,13 @@ function outputUsers(users) {
  button.onclick=function(){
    console.log(choice.value);
    socket.emit('killUser', choice.value);
+ }
+ var butn = document.getElementById("mafiaKill");
+ var chc = document.getElementById("mafia");
+ console.log('button', butn);
+ butn.onclick=function(){
+   console.log(chc.value);
+   socket.emit('killMafia', chc.value);
  }
  
 //     // button.addEventListener("click", function(){
