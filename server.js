@@ -59,7 +59,7 @@ io.on('connection', socket => {
         formatMessage(botName, `${user.username} has joined the chat`)
       );
       
-      if (rooms[room].length == 3)
+      if (rooms[room].length == 5)
     {
       io.emit('message', formatMessage(botName, 'In the game, local townspeople and the mafia are placed in a imaginary village for an all-out battle for survival.\n There are 10 different characters (plus the computer which will act as the moderator) within the game: 8 townspeople, 1 representative, and 1 mafia.\n At night, the moderator will ask the mafia for one person they would like to kill from the group.\n In the morning, the person killed by the mafia will be revealed, and the townspeople may accuse each other in order to figure out the mafia\n They will let the representative who they wish to excute and the rep will have them executed.'));
 
