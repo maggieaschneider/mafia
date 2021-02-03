@@ -3,6 +3,10 @@ const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+
+const roomNameTwo = document.getElementById('room-name-kill');
+const userListTwo = document.getElementById('users-kill');
+
 const select = document.createElement('select');
 
 
@@ -21,6 +25,7 @@ socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);
   outputUsers(users);
 });
+
 
 // Message from server
 socket.on('message', message => {
@@ -114,8 +119,6 @@ function voteMafia(users) {
   }
 }
 
-
-
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
@@ -125,4 +128,3 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
-

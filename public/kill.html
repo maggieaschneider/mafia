@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>kill button</title>
+		<style>
+			.anvil {
+        		width: 833px;
+        		height: 750px;
+        		text-align: center;
+        		position: fixed;
+        		top: 1px;
+        		left: 701px;
+      		}
+		</style>
+	</head>
+	<body>
+		<div class="anvil">
+			<img src="anvil.png" style = "height: 71px; width: 120px; ">
+		  </div>
+		<div class="kill-container">
+			<header class="kill-header">
+
+                <h1>kill</h1>
+                
+			</header>
+			<main class="kill-main">
+            <form action="chat.html">
+				  <div class="kill-sidebar">
+                    <h3><i class="fas fa-comments"></i> Room Name:</h3>
+                    <h2 id="room-name-kill"></h2>
+                    <h3><i class="fas fa-users"></i> Users</h3>
+                    <ul id="users-kill"></ul>
+					
+                    </div>
+                    <div class="kill-selection"></div>
+                    </main>
+					<div class="mafia-kill-container">
+                        <form id="mafia-kill">
+                          <input
+                            id="select"
+                            type="text"
+                            placeholder="make selection"
+                            autocomplete="off"
+                          />
+                          <button type="submit" class="kill">KILL</button>
+				
+                      </div>
+                    </form>
+                </form>
+			</main>
+        </div>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+        integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
+        crossorigin="anonymous"
+        
+        
+      ></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+	</body>
+</html>

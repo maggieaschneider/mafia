@@ -5,6 +5,20 @@
     <style>
       * { margin: 0; padding: 3px; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; padding-bottom: 75px; padding-right: 300px;}
+      .chat-main {
+        word-wrap: break-word;
+        width: 700px;
+        border: 5px dashed;
+      }
+      .box {
+        width: 833px;
+        height: 750px;
+        border: 5px dashed;
+        text-align: center;
+        position: fixed;
+        top: 1px;
+        left: 701px;
+      }
       form { background: rgb(255, 255, 255); border-top: 25px; position: fixed; bottom: 0; width: 100%; }
      form input { border: 0; padding: 10px; width: 20%; margin-right: 0.5%; }
      form button { width: 5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -15,10 +29,14 @@
     </style>
   </head>
   <body>
+    <div class="box">
+      <img src="mafiacampfire.jpg" style = "height: 204px; width: 148px; margin-top: 30%;">
+    </div>
     <div class="chat-container">
       <header class="chat-header">
         <h1>Mafia Chat</h1>
         <a href="index.html" class="btn">Leave Room</a>
+        <a href="kill.html" class="btn">mafia kill</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
@@ -35,12 +53,31 @@
             id="msg"
             type="text"
             placeholder="Enter Message"
-            required
             autocomplete="off"
           />
-          <button class="btn">Send</button>
-        </form>
+          <button class="send">Send</button>  
       </div>
+      <div class="form-control">
+        <label for="room">Victims</label>
+        <select name="room" id="room">
+
+          <option value= users[0]>users[0]</option>
+          <option value="users[1]">users[1]</option>
+          <option value="users[2]">users[2]</option>
+          <!-- <option value="users[3]">users[3]</option>
+          <option value="users[4]">users[4]</option>
+          <option value="users[5]">users[5]</option>
+          <option value="users[6]">users[6]</option>
+          <option value="users[7]">users[7]</option>
+          <option value="users[8]">users[8]</option>
+          <option value="users[9]">users[9]</option> -->
+
+        </select>
+      </div>
+      <button type="submit" class="btn">Kill</button>
+    </form>
+  </main>
+
     </div>
 
     <script
