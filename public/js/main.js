@@ -16,19 +16,9 @@ const socket = io();
 // Join chatroom
 socket.emit('joinRoom', { username, room });
 
-
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
-  console.log('roomUsers', users);
   outputRoomName(room);
-  outputUsers(users);
-});
-
-// Kill person (mafia kills user) ?
-// socket.emit('mafiakillingUser', {username});
-
-// Get person that mafia kills
-socket.on('mafiaKillingUser', ({users}) => {
   outputUsers(users);
 });
 
@@ -37,12 +27,13 @@ socket.on('message', message => {
   console.log(message);
   outputMessage(message);
 
+
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
 // Message submit
-chatForm.addEventListener('send', e => {
+chatForm.addEventListener('submit', e => {
   e.preventDefault();
 
   // Get message text
@@ -56,25 +47,6 @@ chatForm.addEventListener('send', e => {
 
   // Emit message to server
   socket.emit('chatMessage', msg);
-
-  // Clear input
-  e.target.elements.msg.value = '';
-  e.target.elements.msg.focus();
-});
-
-
-chatForm.addEventListener('kill', e => {
-  e.preventDefault();
-
-  // Get message text
-  let msg = e.target.elements.msg.value;
-  
-  msg = msg.trim();
-  socket.disconnect(msg.id);
-  if (!msg){
-    return false;
-  }
-
 
   // Clear input
   e.target.elements.msg.value = '';
@@ -103,24 +75,24 @@ function outputRoomName(room) {
 }
 
 function killUser(users) {
-   select.id = "users";
-   select.name = "users";
-   select.class = "fas fa-users";
+  select.id = "users";
+  select.name = "users";
+  select.class = "fas fa-users";
 
 
-   for (const val of rooms[room].username) {
-     var option = document.createElement("option");
-     option.value = val;
-     select.appendChild(option);
-     document.addChild(select);
-   }
+  for (const val of rooms[room].username) {
+    var option = document.createElement("option");
+    option.value = val;
+    select.appendChild(option);
+    document.addChild(select);
+  }
 
-     var button = document.getElementById("users");
-     button.onClick=function(){
-     console.log(select.options[select.selectedIndex].value);
-     socket.emit('killUser', select.options[select.selectedIndex].value);
-   }
- }
+  var button = document.getElementById("users");
+  button.onClick=function(){
+    console.log(select.options[select.selectedIndex].value);
+    socket.emit('killUser', select.options[select.selectedIndex].value);
+  }
+}
 
 function voteMafia(users) {
   select.id = "users";
@@ -142,6 +114,8 @@ function voteMafia(users) {
   }
 }
 
+
+
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
@@ -151,3 +125,4 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
+

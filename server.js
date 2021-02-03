@@ -40,8 +40,6 @@ io.on('connection', socket => {
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to Mafia!'));
     
-    
-    
 
     // Broadcast when a user connects
     socket.broadcast
@@ -51,34 +49,27 @@ io.on('connection', socket => {
         formatMessage(botName, `${user.username} has joined the chat`)
       );
       
+      if (rooms[room].length == 2)
+    {
+      socket.emit('message', formatMessage('In the game, local townspeople and the mafia are placed in a imaginary village for an all-out battle for survival.'));
+      socket.emit('message', formatMessage('There are 10 different roles (plus the computer which will act as the moderator) within the game: 6 townspeople, 1 sheriff, 1 doctor, 1 sniper, and 1 mafia'));
+      socket.emit('message', formatMessage('At night, the moderator will ask the mafia for one person they would like to kill from the group.'));
+      // socket.broadcast.to(user.room).emit('However, that is not all: the moderator will also ask the sheriff to pick someone they are suspicious of, and they will be confirmed on whether the person they choose is or not the mafia')
+      // socket.broadcast.to(user.room).emit('The modertor will ask the doctor to choose a random person to save from being killed. The sniper is given 1 bullet, to try to kill the mafia. They will be asked every night if they would like to snipe someone, but they do not have to take this chance until they are ready to.')
+      socket.emit('message', formatMessage('In the morning, the person killed by the mafia will be revealed, and the townspeople may accuse each other in order to figure out the mafia'));
       
-    
-      if (rooms[room].length == 3)
-      {
-        //io.to(rooms[room][0].room)
-        //io.emit sending to everyone in every room
-        io.emit('message', formatMessage(botName, 'In the game, local townspeople and the mafia are placed in a imaginary village for an all-out battle for survival.\n There are 10 different roles (plus the computer which will act as the moderator) within the game: 9 townspeople and 1 mafia.\n At night, the moderator will ask the mafia for one person they would like to kill from the group.\n In the morning, the person killed by the mafia will be revealed, and the townspeople may accuse each other in order to figure out the mafia'));
- 
-        assignRoles(room);
-        
-        io.emit('message', formatMessage(botName, "The game will begin now."));
-        murder(room);
-      };
+      assignRoles(room);
+      
+      socket.emit('message', formatMessage("The game will begin now."));
+      murder(room);
+
+    }
 
     // Send users and room info
     io.to(user.room).emit('roomUsers', {
       room: user.room,
       users: getRoomUsers(user.room),
     });
-
-    // Send mafia killing user
-    io.to(user.room).emit('killUser', {
-      room: user.room,
-      users: getRoomUsers(user.room),
-    });
-  
-
-
   });
 
   // Listen for chatMessage
@@ -155,7 +146,7 @@ io.on('connection', socket => {
             
             
             u[i].game_role = roles[i];
-            io.to(u[i].id).emit('message', formatMessage(botName, 'You have been assigned the role of ' + roles[i]));
+            io.to(u[i].id).emit('message', formatMessage(u[i].username, 'You have been assigned the role of ' + roles[i]));
 
         }
   }
@@ -166,12 +157,13 @@ io.on('connection', socket => {
     
     for (var i = 0; i < rooms[room].length; i++) {
       if (roles[i] == ('mafia')){
-        io.to(u[i].id).emit('message', formatMessage(botName, "Choose the name of the person you would like to kill. Enter the name as it is given in the list of users. "));
-        socket.on('kickUser', id => {
+        io.to(u[i].id).emit('message', formatMessage(u[i].username, "Choose the name of the person you would like to kill. If you do not choose a name within 60 seconds, one random person will be killed"));
+        socket.on('killUser', id => {
           const user = getCurrentUser(socket.id);
           const chosen = msg;
-          socket.emit('message', formatMessage(botName, "The mafia has chosen to kill", chosen));
-          vote(room);
+          socket.emit('message', formatMessage("The mafia has chosen to kill", chosen));
+          kickUser(room, chosen);
+          vote(room, chosen);
         });
       }
     }
@@ -204,29 +196,33 @@ io.on('connection', socket => {
             }
           }
          
-        socket.emit('message', formatMessage(botName, "You have voted out ", rooms[room[pos]]));
+        socket.emit('message', formatMessage("You have voted out ", rooms[room[pos]]));
         voteOut(room, rooms[room[pos]]);
 
       };
       // get info of chosen name by votes
-  
+    
 
     function voteOut(room, chosen)
     { 
       console.log(chosen);
       if (chosen.id === (mafia.id))
       {
-        socket.emit('message', formatMessage(botName, "The town has chosen to execute", chosen));
-        socket.emit('message', formatMessage(botName, "The mafia has been voted out. Nice job!"));
-        socket.manager.onClientDisconnect(chosen.id);
+        socket.emit('message', formatMessage("The town has chosen to execute", chosen));
+        socket.emit('message', formatMessage("The mafia has been voted out. Nice job!"));
+        kickUser(chosen);
       }
       else {
-      socket.emit('message', formatMessage(botName, "The town has chosen to execute", chosen));
-      socket.manager.onClientDisconnect(chosen.id);
+      kickUser(chosen);
       murder(room);
       }
     }
 
+    function kickUser(socket){           
+
+      socket.leave(clientInfo[socket.id].room);
+      delete clientInfo[socket.id];
+    }
     
     function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
