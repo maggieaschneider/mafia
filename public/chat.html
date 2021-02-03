@@ -4,8 +4,32 @@
     <title>Mafia Chat</title>
     <style>
       * { margin: 0; padding: 3px; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; padding-bottom: 75px; padding-right: 300px;}
-      form { background: rgb(255, 255, 255); border-top: 25px; position: fixed; bottom: 0; width: 100%; }
+      body { font: 13px Helvetica, Arial; padding-bottom: 75px; }
+      .chat-main {
+        word-wrap: break-word;
+        width: 700px;
+        border: 5px dashed;
+      }
+      .box {
+        width: 833px;
+        height: 750px;
+        border: 5px dashed;
+        text-align: center;
+        position: fixed;
+        top: 1px;
+        left: 701px;
+      }
+      .send {
+        top: 700px;
+        left: 50px;
+        border: 5px dashed;
+      }
+      .kill {
+        top: 700px;
+        left: 200px;
+        border: 5px dashed;
+      }
+      form { padding: 3px; position: fixed; bottom: 0; width: 100%; }
      form input { border: 0; padding: 10px; width: 20%; margin-right: 0.5%; }
      form button { width: 5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
      #messages { list-style-type: none; margin: 75px; padding: 0;} 
@@ -15,6 +39,9 @@
     </style>
   </head>
   <body>
+    <div class="box">
+      <img src="mafiacampfire2.png" style = "height: 204px; width: 148px; ">
+    </div>
     <div class="chat-container">
       <header class="chat-header">
         <h1>Mafia Chat</h1>
@@ -35,12 +62,29 @@
             id="msg"
             type="text"
             placeholder="Enter Message"
-            required
             autocomplete="off"
           />
-          <button class="btn">Send</button>
+          <button class="send">Send</button>
+
+        
         </form>
+        
       </div>
+      <div class="mafia-killing-user-container">
+      <form id="mafia-killing-user">
+        <input
+          id="msg"
+          type="text"
+          placeholder="Enter Selection"
+          autocomplete="off"
+        />
+        <button type="kill">KILL</button>
+      </form>
+    </div>
+
+        
+
+     
     </div>
 
     <script
