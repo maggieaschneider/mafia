@@ -4,8 +4,6 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
-const roomNameTwo = document.getElementById('room-name-kill');
-const userListTwo = document.getElementById('users-kill');
 
 const select = document.createElement('select');
 
@@ -128,3 +126,14 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
  }
+
+ 
+ var el = document.getElementById("userKill");
+ if (el.addEventListener)
+     el.addEventListener("click", assignRoles, false);
+ else if (el.attachEvent)
+     el.attachEvent('onclick', assignRoles);
+
+// document.getElementById("victimChoose").onclick = assinRoles;
+// document.getElementById("victimChoose").onclick = function () { alert('i hate comp sci!'); };
+

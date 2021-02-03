@@ -36,7 +36,6 @@
       <header class="chat-header">
         <h1>Mafia Chat</h1>
         <a href="index.html" class="btn">Leave Room</a>
-        <a href="kill.html" class="btn">mafia kill</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
@@ -57,25 +56,35 @@
           />
           <button class="send">Send</button>  
       </div>
-      <div class="form-control">
-        <label for="room">Victims</label>
-        <select name="room" id="room">
+      <!-- <div class="form-control">
+        <label for="victims">Choose your victim:</label>
+        <input list="victims" name="victims" id="victims">
+        
+        <datalist id="victims">
+          <option value= user[0]>
+          <option value="Firefox">
+          <option value="Chrome">
+          <option value="Opera">
+          <option value="Safari">
+        </datalist>
+      </div> -->
 
-          <option value= users[0]>users[0]</option>
-          <option value="users[1]">users[1]</option>
-          <option value="users[2]">users[2]</option>
-          <!-- <option value="users[3]">users[3]</option>
-          <option value="users[4]">users[4]</option>
-          <option value="users[5]">users[5]</option>
-          <option value="users[6]">users[6]</option>
-          <option value="users[7]">users[7]</option>
-          <option value="users[8]">users[8]</option>
-          <option value="users[9]">users[9]</option> -->
-
-        </select>
+      <div class="victim-choice-container">
+        <form id="victim-choice">
+        <label for="victim">Choose your victim</label>
+        <input
+          type="text"
+          name="victim"
+          id="victim"
+          placeholder="Enter username..."
+        />
+        <!-- <button class="send">KILL</button> -->
+       <input id="userKill" type="button" value="userKill" onclick="assignRoles();" />
       </div>
-      <button type="submit" class="btn">Kill</button>
-    </form>
+
+      <!-- <input id="userKill" type="button" value="userKill" onclick="assignRoles();" /> -->
+      
+      </form>
   </main>
 
     </div>
